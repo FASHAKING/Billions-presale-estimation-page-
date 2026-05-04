@@ -47,9 +47,9 @@ export default function Footer() {
               <img
                 src="https://dl.dropboxusercontent.com/scl/fi/owg5uiioapvsdwx3x6ati/fashaking.png?rlkey=6esi0hd2u7j4reqt90r9hysyu&st=1g4e9e5k"
                 alt="fashaking"
-                width={22}
-                height={22}
-                className="rounded-full border border-[rgba(0,70,255,0.3)] group-hover:border-[#0095FF] transition-colors object-cover"
+                width={44}
+                height={44}
+                className="rounded-full border-2 border-[rgba(0,70,255,0.4)] group-hover:border-[#0095FF] transition-all duration-200 object-cover shadow-[0_0_12px_rgba(0,70,255,0.3)] group-hover:shadow-[0_0_18px_rgba(0,149,255,0.5)]"
               />
               fashaking
             </a>
