@@ -34,10 +34,23 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800/60 mt-8 pt-6 text-center text-xs text-gray-700">
-          This tool is for estimation purposes only and does not constitute financial advice.
-          Token prices are volatile. Data sourced from DexScreener.
-          © {new Date().getFullYear()} Billions Network.
+        <div className="border-t border-gray-800/60 mt-8 pt-6 flex flex-col items-center gap-2 text-xs text-gray-700 text-center">
+          <span>
+            Built with ❤️ for Billions Community by{' '}
+            <a
+              href="https://x.com/FASHAKING3"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-500 hover:text-amber-400 transition-colors font-semibold"
+            >
+              fashaking
+            </a>
+          </span>
+          <span>
+            This tool is for estimation purposes only and does not constitute financial advice.
+            Token prices are volatile. Data sourced from DexScreener.
+            © {new Date().getFullYear()} Billions Network.
+          </span>
         </div>
       </div>
     </footer>
