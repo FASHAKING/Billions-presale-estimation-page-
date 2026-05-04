@@ -24,7 +24,7 @@ export default function Footer() {
             </a>
             <span className="hidden sm:block text-gray-800">·</span>
             <a
-              href={`https://dexscreener.com/search?q=0xb1110919016846972056AB995054D65560D5f05E`}
+              href="https://dexscreener.com/bsc/0xDf24f8c21Cb404B3031a450D8e049D6E39FC1fA5"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 hover:text-amber-400 transition-colors"

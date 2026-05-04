@@ -1,5 +1,5 @@
 // $BILL token — Billions Network
-export const CONTRACT_ADDRESS = '0xb1110919016846972056AB995054D65560D5f05E'
+export const CONTRACT_ADDRESS = '0xDf24f8c21Cb404B3031a450D8e049D6E39FC1fA5'
 
 // Presale terms: $100M valuation / 10B supply = $0.01 per token
 export const PRESALE_PRICE_USD = 0.01
