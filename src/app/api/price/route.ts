@@ -5,26 +5,13 @@ import type { BillPrice } from '@/types'
 export const runtime = 'nodejs'
 
 const DEXSCREENER = `https://api.dexscreener.com/latest/dex/tokens/${CONTRACT_ADDRESS}`
-const TTL_MS = 30_000
-
-// Module-level in-memory cache (survives hot reloads in dev via singleton pattern)
-declare global {
-  // eslint-disable-next-line no-var
-  var __billPriceCache: { data: BillPrice; ts: number } | null
-}
-globalThis.__billPriceCache ??= null
 
 export async function GET() {
-  const now = Date.now()
-  if (globalThis.__billPriceCache && now - globalThis.__billPriceCache.ts < TTL_MS) {
-    return NextResponse.json({ success: true, data: globalThis.__billPriceCache.data })
-  }
-
   try {
     const res = await fetch(DEXSCREENER, {
       headers: { Accept: 'application/json' },
-      // no Next cache — we manage it ourselves
-      cache: 'no-store',
+      // Next.js Data Cache: served from Vercel edge for 30s, then revalidated
+      next: { revalidate: 30 },
     })
     if (!res.ok) throw new Error(`DexScreener responded ${res.status}`)
 
@@ -41,14 +28,14 @@ export async function GET() {
     }
 
     const pairs = json.pairs ?? []
-    if (pairs.length === 0) throw new Error('No pairs found for this token')
+    if (pairs.length === 0) throw new Error('No trading pairs found for this token')
 
-    // Use the pair with the highest liquidity for accurate pricing
+    // Use the pair with the highest liquidity for the most accurate price
     const best = pairs
       .filter(p => p.priceUsd && parseFloat(p.priceUsd) > 0)
       .sort((a, b) => (b.liquidity?.usd ?? 0) - (a.liquidity?.usd ?? 0))[0]
 
-    if (!best) throw new Error('No valid pair with a USD price found')
+    if (!best) throw new Error('No pair found with a valid USD price')
 
     const data: BillPrice = {
       price: parseFloat(best.priceUsd!),
@@ -58,16 +45,12 @@ export async function GET() {
       pairAddress: best.pairAddress,
       dexId: best.dexId,
       chainId: best.chainId,
-      updatedAt: now,
+      updatedAt: Date.now(),
     }
 
-    globalThis.__billPriceCache = { data, ts: now }
     return NextResponse.json({ success: true, data })
   } catch (err) {
     console.error('[price/bill]', err)
-    if (globalThis.__billPriceCache) {
-      return NextResponse.json({ success: true, data: globalThis.__billPriceCache.data, stale: true })
-    }
     return NextResponse.json(
       { success: false, error: err instanceof Error ? err.message : 'Price unavailable' },
       { status: 503 }
