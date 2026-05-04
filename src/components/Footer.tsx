@@ -36,14 +36,21 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800/60 mt-8 pt-6 flex flex-col items-center gap-2 text-xs text-gray-700 text-center">
-          <span>
+          <span className="flex items-center gap-1.5 flex-wrap justify-center">
             Built with ❤️ for Billions Community by{' '}
             <a
               href="https://x.com/FASHAKING3"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#0046FF] hover:text-[#0095FF] transition-colors font-semibold"
+              className="inline-flex items-center gap-1.5 text-[#0046FF] hover:text-[#0095FF] transition-colors font-semibold group"
             >
+              <img
+                src="https://dl.dropboxusercontent.com/scl/fi/owg5uiioapvsdwx3x6ati/fashaking.png?rlkey=6esi0hd2u7j4reqt90r9hysyu&st=1g4e9e5k"
+                alt="fashaking"
+                width={22}
+                height={22}
+                className="rounded-full border border-[rgba(0,70,255,0.3)] group-hover:border-[#0095FF] transition-colors object-cover"
+              />
               fashaking
             </a>
           </span>
