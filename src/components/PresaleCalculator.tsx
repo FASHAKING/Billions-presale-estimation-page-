@@ -67,20 +67,20 @@ function useCountdown(target: Date | null) {
   return left
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+// ─── Unlock info card ─────────────────────────────────────────────────────────
 
 function UnlockInfo({ unlockDate }: { unlockDate: Date }) {
   const countdown = useCountdown(unlockDate)
   const isPast = unlockDate.getTime() < Date.now()
 
   return (
-    <div className="bg-amber-500/8 border border-amber-500/20 rounded-xl p-4">
+    <div className="bg-[rgba(0,70,255,0.08)] border border-[rgba(0,70,255,0.2)] rounded-xl p-4">
       <div className="flex items-center gap-2 mb-3">
-        <CalendarClock size={16} className="text-amber-400" />
+        <CalendarClock size={16} className="text-[#0095FF]" />
         <span className="text-sm font-semibold text-white">Token Unlock</span>
         {isPast && <span className="ml-auto tag-active text-[10px]">Unlocked</span>}
       </div>
-      <div className="text-base font-bold text-amber-400 mb-2">
+      <div className="text-base font-bold text-[#0095FF] mb-2">
         {unlockDate.toLocaleDateString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         })}
@@ -103,27 +103,23 @@ function UnlockInfo({ unlockDate }: { unlockDate: Date }) {
   )
 }
 
-function ReturnTable({
-  tokens,
-  presaleInvestment,
-}: {
-  tokens: number
-  presaleInvestment: number
-}) {
+// ─── Price scenario table ─────────────────────────────────────────────────────
+
+function ReturnTable({ tokens, presaleInvestment }: { tokens: number; presaleInvestment: number }) {
   const targets = [
-    { label: '0.005 (–50%)', price: 0.005 },
-    { label: '0.01 (presale)', price: 0.01 },
-    { label: '0.02 (2×)', price: 0.02 },
-    { label: '0.05 (5×)', price: 0.05 },
-    { label: '0.10 (10×)', price: 0.10 },
-    { label: '0.50 (50×)', price: 0.50 },
-    { label: '1.00 (100×)', price: 1.00 },
+    { label: '0.005  (–50%)', price: 0.005 },
+    { label: '0.01   (presale)', price: 0.01 },
+    { label: '0.02   (2×)',  price: 0.02 },
+    { label: '0.05   (5×)',  price: 0.05 },
+    { label: '0.10   (10×)', price: 0.10 },
+    { label: '0.50   (50×)', price: 0.50 },
+    { label: '1.00   (100×)',price: 1.00 },
   ]
 
   return (
     <div className="glass-card p-5">
       <div className="flex items-center gap-2 mb-4">
-        <TrendingUp size={16} className="text-emerald-400" />
+        <TrendingUp size={16} className="text-[#3EFFC8]" />
         <h3 className="text-sm font-bold text-white">Price Scenarios</h3>
         <span className="ml-auto text-[10px] text-gray-600">not financial advice</span>
       </div>
@@ -131,17 +127,23 @@ function ReturnTable({
         {targets.map(t => {
           const value = tokens * t.price
           const roi = ((value - presaleInvestment) / presaleInvestment) * 100
-          const isPositive = roi >= 0
+          const isPresale = t.price === 0.01
           return (
             <div
               key={t.price}
               className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm ${
-                t.price === 0.01 ? 'bg-gray-800/60 border border-gray-700/40' : 'bg-[#0D0D1A]/60'
+                isPresale
+                  ? 'bg-[rgba(0,70,255,0.1)] border border-[rgba(0,70,255,0.2)]'
+                  : 'bg-[#070A18]/60'
               }`}
             >
-              <span className="text-gray-500 font-mono text-xs w-28">${t.label}</span>
-              <span className="font-bold text-white">{usd(value, true)}</span>
-              <span className={`text-xs font-semibold w-20 text-right ${isPositive ? 'text-emerald-400' : 'text-red-400'}`}>
+              <span className={`font-mono text-xs w-32 ${isPresale ? 'text-[#0095FF]' : 'text-gray-500'}`}>
+                ${t.label}
+              </span>
+              <span className={`font-bold ${isPresale ? 'text-white' : 'text-white'}`}>
+                {usd(value, true)}
+              </span>
+              <span className={`text-xs font-semibold w-20 text-right ${roi >= 0 ? 'text-[#3EFFC8]' : 'text-red-400'}`}>
                 {pctFmt(roi)}
               </span>
             </div>
@@ -178,10 +180,18 @@ export default function PresaleCalculator() {
 
   const hasResult = investmentNum > 0 && selectedOption !== 'A'
 
+  // Option style config
+  const optStyle = {
+    A: { border: 'border-gray-600/40',       active: 'border-gray-500/60 bg-gray-500/8',       badge: 'bg-gray-700 text-gray-300' },
+    B: { border: 'border-[rgba(0,149,255,0.2)]', active: 'border-[#0095FF]/60 bg-[rgba(0,149,255,0.06)]', badge: 'bg-blue-900/60 text-[#0095FF]' },
+    C: { border: 'border-[rgba(0,70,255,0.2)]',  active: 'border-[#0046FF]/60 bg-[rgba(0,70,255,0.08)]',  badge: 'bg-[#0046FF]/20 text-[#3EFFC8]' },
+  }
+
   return (
     <section id="calculator" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Header */}
       <div className="text-center mb-10">
-        <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">
+        <p className="text-[#0095FF] text-sm font-semibold uppercase tracking-widest mb-3">
           Billions Presale
         </p>
         <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
@@ -189,8 +199,8 @@ export default function PresaleCalculator() {
           <span className="gradient-text">$BILL Allocation</span>
         </h1>
         <p className="text-gray-400 max-w-lg mx-auto text-base">
-          Enter your investment amount and which option you chose to see your
-          token allocation and real-time value.
+          Enter your investment and select your option to see your token
+          allocation and real-time value.
         </p>
       </div>
 
@@ -217,7 +227,7 @@ export default function PresaleCalculator() {
             <p className="text-xs text-gray-600 mt-2">
               Presale price: <span className="text-gray-400">$0.01 / $BILL</span>
               {investmentNum > 0 && (
-                <span className="ml-2 text-amber-500/80">
+                <span className="ml-2 text-[#0095FF]/80">
                   → base: {tokenFmt(investmentNum / PRESALE_PRICE_USD)} tokens
                 </span>
               )}
@@ -228,41 +238,32 @@ export default function PresaleCalculator() {
           <div className="glass-card p-6">
             <label className="label-text">Your Presale Option</label>
             <div className="flex flex-col gap-3">
-              {OPTIONS.map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => setSelectedOption(opt.id)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${
-                    selectedOption === opt.id
-                      ? opt.id === 'A'
-                        ? 'border-gray-500/60 bg-gray-500/10'
-                        : opt.id === 'B'
-                        ? 'border-blue-500/60 bg-blue-500/8'
-                        : 'border-amber-500/60 bg-amber-500/10'
-                      : 'border-gray-700/40 hover:border-gray-600/60'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-xs font-black px-2 py-0.5 rounded-md ${
-                      opt.id === 'A'
-                        ? 'bg-gray-700 text-gray-300'
-                        : opt.id === 'B'
-                        ? 'bg-blue-900/60 text-blue-300'
-                        : 'bg-amber-900/60 text-amber-300'
-                    }`}>
-                      {opt.short}
-                    </span>
-                    {opt.lockMonths && (
-                      <span className="ml-auto flex items-center gap-1 text-[10px] text-gray-500">
-                        <Lock size={9} />
-                        {opt.lockMonths}mo lock
+              {OPTIONS.map(opt => {
+                const s = optStyle[opt.id]
+                const isSelected = selectedOption === opt.id
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedOption(opt.id)}
+                    className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${
+                      isSelected ? s.active : `${s.border} hover:brightness-110`
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-xs font-black px-2 py-0.5 rounded-md ${s.badge}`}>
+                        {opt.short}
                       </span>
-                    )}
-                  </div>
-                  <p className="text-sm font-semibold text-white">{opt.label}</p>
-                  <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{opt.description}</p>
-                </button>
-              ))}
+                      {opt.lockMonths && (
+                        <span className="ml-auto flex items-center gap-1 text-[10px] text-gray-500">
+                          <Lock size={9} />{opt.lockMonths}mo lock
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm font-semibold text-white">{opt.label}</p>
+                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{opt.description}</p>
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -284,16 +285,16 @@ export default function PresaleCalculator() {
               {investmentNum > 0 ? (
                 <>
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-[#0D0D1A]/60 rounded-xl p-4">
+                    <div className="bg-[#070A18]/60 rounded-xl p-4">
                       <div className="text-xs text-gray-500 mb-1">Original investment</div>
                       <div className="text-xl font-bold text-white">{usd(investmentNum)}</div>
                     </div>
-                    <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
+                    <div className="bg-[rgba(62,255,200,0.08)] border border-[rgba(62,255,200,0.2)] rounded-xl p-4">
                       <div className="text-xs text-gray-500 mb-1">5% bonus</div>
-                      <div className="text-xl font-bold text-emerald-400">+{usd(investmentNum * 0.05)}</div>
+                      <div className="text-xl font-bold text-[#3EFFC8]">+{usd(investmentNum * 0.05)}</div>
                     </div>
                   </div>
-                  <div className="bg-gray-700/20 border border-gray-500/30 rounded-xl p-5 text-center">
+                  <div className="bg-[rgba(0,70,255,0.07)] border border-[rgba(0,70,255,0.2)] rounded-xl p-5 text-center">
                     <div className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Total refund</div>
                     <div className="text-4xl font-black text-white">{usd(investmentNum * 1.05)}</div>
                     <div className="text-xs text-gray-600 mt-1">returned to your wallet</div>
@@ -305,35 +306,37 @@ export default function PresaleCalculator() {
                 </div>
               )}
             </div>
+
           ) : !hasResult ? (
             /* Placeholder */
             <div className="glass-card p-10 flex flex-col items-center justify-center min-h-[300px] border-dashed gap-4">
-              <Zap size={36} className="text-amber-400/30" />
+              <Zap size={36} className="text-[#0046FF]/30" />
               <p className="text-gray-600 text-sm text-center max-w-40">
                 Enter your investment amount to see your allocation
               </p>
             </div>
+
           ) : (
             <>
               {/* Allocation card */}
               <div className={`glass-card p-6 ${
                 selectedOption === 'C'
-                  ? 'border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.07)]'
-                  : 'border-blue-500/25'
+                  ? 'border-[rgba(0,70,255,0.4)] shadow-[0_0_40px_rgba(0,70,255,0.08)]'
+                  : 'border-[rgba(0,149,255,0.3)]'
               }`}>
                 <div className="flex items-center gap-2 mb-5">
-                  <Coins size={18} className="text-amber-400" />
+                  <Coins size={18} className="text-[#0046FF]" />
                   <h3 className="font-bold text-white">Your Allocation</h3>
                   <span className={`ml-auto text-xs font-bold px-2 py-0.5 rounded-lg ${
                     selectedOption === 'C'
-                      ? 'bg-amber-500/15 text-amber-300'
-                      : 'bg-blue-500/15 text-blue-300'
+                      ? 'bg-[rgba(0,70,255,0.15)] text-[#3EFFC8]'
+                      : 'bg-[rgba(0,149,255,0.15)] text-[#0095FF]'
                   }`}>
                     {option.short}
                   </span>
                 </div>
 
-                {/* Big token number */}
+                {/* Token count */}
                 <div className="mb-5">
                   <div className="text-5xl font-black gradient-text leading-none">
                     {tokenFmt(tokens)}
@@ -341,23 +344,23 @@ export default function PresaleCalculator() {
                   <div className="text-xl text-gray-400 font-semibold mt-1">$BILL tokens</div>
                 </div>
 
-                {/* Breakdown */}
+                {/* Stats grid */}
                 <div className="grid grid-cols-2 gap-3 mb-5">
-                  <div className="bg-[#0D0D1A]/60 rounded-xl p-3">
+                  <div className="bg-[#070A18]/60 rounded-xl p-3">
                     <div className="text-xs text-gray-500 mb-1">Base allocation</div>
                     <div className="font-bold text-white">{tokenFmt(baseTokens)}</div>
                   </div>
-                  <div className="bg-[#0D0D1A]/60 rounded-xl p-3">
+                  <div className="bg-[#070A18]/60 rounded-xl p-3">
                     <div className="text-xs text-gray-500 mb-1">
                       Bonus ({option.bonusMultiplier === 1.25 ? '25%' : '50%'})
                     </div>
-                    <div className="font-bold text-emerald-400">+{tokenFmt(bonusTokens)}</div>
+                    <div className="font-bold text-[#3EFFC8]">+{tokenFmt(bonusTokens)}</div>
                   </div>
-                  <div className="bg-[#0D0D1A]/60 rounded-xl p-3">
+                  <div className="bg-[#070A18]/60 rounded-xl p-3">
                     <div className="text-xs text-gray-500 mb-1">Invested</div>
                     <div className="font-bold text-white">{usd(investmentNum)}</div>
                   </div>
-                  <div className="bg-[#0D0D1A]/60 rounded-xl p-3">
+                  <div className="bg-[#070A18]/60 rounded-xl p-3">
                     <div className="text-xs text-gray-500 mb-1">Entry price</div>
                     <div className="font-bold text-gray-300">$0.0100</div>
                   </div>
@@ -367,15 +370,15 @@ export default function PresaleCalculator() {
                 <div className={`rounded-xl p-4 ${
                   currentValue != null
                     ? roi != null && roi >= 0
-                      ? 'bg-emerald-500/10 border border-emerald-500/20'
-                      : 'bg-red-500/10 border border-red-500/20'
+                      ? 'bg-[rgba(62,255,200,0.08)] border border-[rgba(62,255,200,0.2)]'
+                      : 'bg-red-500/8 border border-red-500/20'
                     : 'bg-gray-700/20 border border-gray-700/30'
                 }`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-xs text-gray-500 mb-1">Current Value</div>
                       {priceLoading ? (
-                        <div className="h-7 w-32 rounded bg-gray-700 animate-pulse" />
+                        <div className="h-7 w-32 rounded bg-[#0C1029] animate-pulse" />
                       ) : currentValue != null ? (
                         <div className="text-2xl font-black text-white">{usd(currentValue)}</div>
                       ) : (
@@ -385,35 +388,33 @@ export default function PresaleCalculator() {
                     {roi != null && (
                       <div className="text-right">
                         <div className="text-xs text-gray-500 mb-1">ROI</div>
-                        <div className={`text-xl font-black ${roi >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        <div className={`text-xl font-black ${roi >= 0 ? 'text-[#3EFFC8]' : 'text-red-400'}`}>
                           {pctFmt(roi)}
                         </div>
                       </div>
                     )}
                   </div>
-
                   {currentPrice != null && (
-                    <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-600">
-                      <span>{priceFmt(currentPrice)} × {tokenFmt(tokens)} tokens</span>
+                    <div className="text-xs text-gray-600 mt-2">
+                      {priceFmt(currentPrice)} × {tokenFmt(tokens)} tokens
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Unlock info */}
+              {/* Unlock countdown */}
               {option.unlockDate && <UnlockInfo unlockDate={option.unlockDate} />}
 
-              {/* Lock info */}
+              {/* Fine print */}
               <div className="flex items-start gap-3 glass-card px-4 py-3">
-                <Info size={14} className="text-gray-600 mt-0.5 shrink-0" />
+                <Info size={14} className="text-gray-700 mt-0.5 shrink-0" />
                 <p className="text-xs text-gray-600 leading-relaxed">
-                  Your tokens are locked and will be released on the unlock date above.
                   TGE: May 4, 2026 · Selection window: Apr 27 – May 18, 2026 via{' '}
                   <a
                     href="https://kaito.ai/capital-launchpad"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-amber-500/70 hover:text-amber-400 underline"
+                    className="text-[#0095FF]/80 hover:text-[#0095FF] underline"
                   >
                     kaito.ai/capital-launchpad
                   </a>
@@ -422,12 +423,12 @@ export default function PresaleCalculator() {
             </>
           )}
 
-          {/* Price scenario table — always show once investment entered */}
+          {/* Price scenario table */}
           {hasResult && <ReturnTable tokens={tokens} presaleInvestment={investmentNum} />}
         </div>
       </div>
 
-      {/* Comparison pill — show if B/C selected and result visible */}
+      {/* Option comparison row */}
       {hasResult && (
         <div className="mt-6 flex flex-wrap gap-3 justify-center">
           {OPTIONS.filter(o => o.id !== 'A').map(o => {
@@ -440,8 +441,8 @@ export default function PresaleCalculator() {
                 onClick={() => setSelectedOption(o.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all ${
                   isSelected
-                    ? 'border-amber-500/60 bg-amber-500/10 text-white'
-                    : 'border-gray-700/40 text-gray-500 hover:border-gray-600/60'
+                    ? 'border-[#0046FF]/60 bg-[rgba(0,70,255,0.1)] text-white'
+                    : 'border-gray-700/40 text-gray-500 hover:border-[rgba(0,70,255,0.3)]'
                 }`}
               >
                 <span className="font-bold">{o.short}</span>

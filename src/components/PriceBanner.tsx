@@ -7,9 +7,10 @@ import type { ApiResponse, BillPrice } from '@/types'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
-function fmt(n: number, decimals = 6): string {
+function fmt(n: number): string {
   if (n >= 1) return n.toLocaleString('en-US', { maximumFractionDigits: 4 })
-  return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+  if (n < 0.0001) return n.toFixed(8)
+  return n.toLocaleString('en-US', { minimumFractionDigits: 6, maximumFractionDigits: 6 })
 }
 
 function fmtCompact(n: number): string {
@@ -31,40 +32,40 @@ export default function PriceBanner() {
 
   const dexUrl = p
     ? `https://dexscreener.com/${p.chainId}/${p.pairAddress}`
-    : `https://dexscreaner.com/search/?q=${CONTRACT_ADDRESS}`
+    : `https://dexscreener.com/bsc/${CONTRACT_ADDRESS}`
 
   return (
-    <div className="sticky top-16 z-40 border-b border-amber-500/10 bg-[#0A0A14]/90 backdrop-blur-xl">
+    <div className="sticky top-16 z-40 border-b border-[rgba(0,70,255,0.12)] bg-[#070A18]/92 backdrop-blur-xl">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
 
-          {/* Token label */}
+          {/* Token identity */}
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-[10px] font-black text-black">
+            <div className="w-5 h-5 rounded-full bg-[#0046FF] flex items-center justify-center text-[9px] font-black text-white shadow-[0_0_8px_rgba(0,70,255,0.5)]">
               B
             </div>
             <span className="text-sm font-bold text-white">$BILL</span>
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#3EFFC8] glow-dot ml-1" />
+            <span className="text-[10px] text-[#3EFFC8] font-semibold">LIVE</span>
           </div>
 
-          {/* Live price */}
+          {/* Price */}
           {isLoading ? (
-            <div className="h-5 w-28 rounded bg-gray-800 animate-pulse" />
+            <div className="h-5 w-28 rounded bg-[#0C1029] animate-pulse" />
           ) : p ? (
             <div className="flex items-center gap-3">
               <span className="text-xl font-black text-white tracking-tight">
                 ${fmt(p.price)}
               </span>
-
               <span className={`flex items-center gap-1 text-sm font-semibold px-2 py-0.5 rounded-lg ${
                 up
-                  ? 'bg-emerald-500/15 text-emerald-400'
-                  : 'bg-red-500/15 text-red-400'
+                  ? 'bg-[rgba(62,255,200,0.1)] text-[#3EFFC8]'
+                  : 'bg-red-500/10 text-red-400'
               }`}>
                 {up ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
                 {up ? '+' : ''}{p.priceChange24h.toFixed(2)}%
               </span>
-
-              <span className="hidden sm:block text-xs text-gray-600">24h</span>
+              <span className="hidden sm:block text-[10px] text-gray-600">24h</span>
             </div>
           ) : (
             <span className="text-sm text-gray-500">Price unavailable</span>
@@ -86,31 +87,31 @@ export default function PriceBanner() {
             </div>
           )}
 
-          {/* Presale entry price */}
+          {/* Presale price */}
           <div className="hidden sm:flex flex-col">
-            <span className="text-[10px] text-gray-600 uppercase tracking-wider">Presale price</span>
+            <span className="text-[10px] text-gray-600 uppercase tracking-wider">Presale</span>
             <span className="text-xs font-semibold text-gray-400">$0.0100</span>
           </div>
 
-          {/* Multiplier vs presale */}
+          {/* vs presale multiplier */}
           {p && (
             <div className="flex flex-col">
               <span className="text-[10px] text-gray-600 uppercase tracking-wider">vs presale</span>
-              <span className={`text-xs font-bold ${p.price >= 0.01 ? 'text-emerald-400' : 'text-red-400'}`}>
+              <span className={`text-xs font-bold ${p.price >= 0.01 ? 'text-[#3EFFC8]' : 'text-red-400'}`}>
                 {(p.price / 0.01).toFixed(2)}x
               </span>
             </div>
           )}
 
-          {/* Spacer + actions */}
+          {/* Actions */}
           <div className="ml-auto flex items-center gap-3">
             {data?.stale && (
-              <span className="text-[10px] text-amber-500/60">stale</span>
+              <span className="text-[10px] text-[#0095FF]/60">stale</span>
             )}
             <button
               onClick={() => mutate()}
               title="Refresh price"
-              className="text-gray-600 hover:text-amber-400 transition-colors"
+              className="text-gray-600 hover:text-[#0046FF] transition-colors"
             >
               <RefreshCw size={13} className={isValidating ? 'animate-spin' : ''} />
             </button>
@@ -118,7 +119,7 @@ export default function PriceBanner() {
               href={dexUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-1 text-[11px] text-gray-600 hover:text-amber-400 transition-colors"
+              className="hidden sm:flex items-center gap-1 text-[11px] text-gray-600 hover:text-[#0095FF] transition-colors"
             >
               Chart <ExternalLink size={10} />
             </a>

@@ -22,7 +22,7 @@ const FAQS = [
   },
   {
     q: 'Where does the live price come from?',
-    a: 'The $BILL price is fetched live from DexScreener using the official contract address (0xb1110919016846972056AB995054D65560D5f05E). It refreshes automatically every 30 seconds and selects the trading pair with the highest liquidity for accuracy.',
+    a: 'The $BILL price is fetched live from DexScreener using the official BNB Chain contract address (0xDf24f8c21Cb404B3031a450D8e049D6E39FC1fA5). It refreshes automatically every 30 seconds and selects the trading pair with the highest liquidity for accuracy.',
   },
   {
     q: 'How do I submit my option selection?',
@@ -40,7 +40,7 @@ export default function FAQSection() {
   return (
     <section id="faq" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-10">
-        <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">FAQ</p>
+        <p className="text-[#0095FF] text-sm font-semibold uppercase tracking-widest mb-3">FAQ</p>
         <h2 className="text-3xl font-bold text-white">Common Questions</h2>
       </div>
 
@@ -48,7 +48,9 @@ export default function FAQSection() {
         {FAQS.map((faq, i) => (
           <div
             key={i}
-            className={`glass-card overflow-hidden transition-all duration-200 ${open === i ? 'border-amber-500/20' : ''}`}
+            className={`glass-card overflow-hidden transition-all duration-200 ${
+              open === i ? 'border-[rgba(0,70,255,0.25)]' : ''
+            }`}
           >
             <button
               onClick={() => setOpen(open === i ? null : i)}
@@ -57,11 +59,13 @@ export default function FAQSection() {
               <span className="font-semibold text-white text-sm pr-4">{faq.q}</span>
               <ChevronDown
                 size={16}
-                className={`shrink-0 text-amber-400 transition-transform duration-200 ${open === i ? 'rotate-180' : ''}`}
+                className={`shrink-0 text-[#0046FF] transition-transform duration-200 ${
+                  open === i ? 'rotate-180' : ''
+                }`}
               />
             </button>
             {open === i && (
-              <div className="px-5 pb-5 text-sm text-gray-400 leading-relaxed border-t border-amber-500/10 pt-4">
+              <div className="px-5 pb-5 text-sm text-gray-400 leading-relaxed border-t border-[rgba(0,70,255,0.1)] pt-4">
                 {faq.a}
               </div>
             )}
