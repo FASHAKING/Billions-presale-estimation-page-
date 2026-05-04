@@ -10,7 +10,7 @@ const FAQS = [
   },
   {
     q: 'What are Options A, B, and C?',
-    a: 'Option A gives you a full 100% refund of your original contribution — no tokens. Option B lets you keep your full token allocation plus a 25% bonus on top, with a 6-month lock after TGE. Option C gives you a 50% bonus on top of your full allocation, locked for 12 months after TGE. B and C are designed for contributors who want longer-term alignment with Billions.',
+    a: 'Option A gives you a full 100% refund of your original contribution plus a 5% cash bonus on top — no tokens. Option B lets you keep your full token allocation plus a 25% bonus in tokens, with a 6-month lock after TGE. Option C gives you a 50% token bonus on top of your full allocation, locked for 12 months after TGE. B and C are designed for contributors who want longer-term alignment with Billions.',
   },
   {
     q: 'When is TGE and when do tokens unlock?',

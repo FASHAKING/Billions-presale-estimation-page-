@@ -19,18 +19,20 @@ export interface OptionConfig {
   label: string
   short: string
   description: string
-  bonusMultiplier: number    // 1.0 = no bonus, 1.25 = 25% bonus, 1.5 = 50% bonus
-  lockMonths: number | null  // null = refund, no tokens
+  bonusMultiplier: number    // token multiplier (0 = refund option)
+  capitalBonus: number       // cash bonus on top of refund (e.g. 0.05 = 5%)
+  lockMonths: number | null  // null = no token lock
   unlockDate: Date | null
 }
 
 export const OPTIONS: OptionConfig[] = [
   {
     id: 'A',
-    label: 'Full Refund',
+    label: 'Full Refund + 5% Bonus',
     short: 'Option A',
-    description: 'Receive 100% of your original contribution back. No $BILL tokens.',
+    description: 'Receive 100% of your original contribution back plus a 5% cash bonus on top. No $BILL tokens.',
     bonusMultiplier: 0,
+    capitalBonus: 0.05,
     lockMonths: null,
     unlockDate: null,
   },
@@ -40,6 +42,7 @@ export const OPTIONS: OptionConfig[] = [
     short: 'Option B',
     description: 'Keep your full allocation + 25% bonus tokens on top. Released 6 months after TGE.',
     bonusMultiplier: 1.25,
+    capitalBonus: 0,
     lockMonths: 6,
     unlockDate: OPTION_B_UNLOCK,
   },
@@ -49,6 +52,7 @@ export const OPTIONS: OptionConfig[] = [
     short: 'Option C',
     description: 'Keep your full allocation + 50% bonus tokens on top. Released 12 months after TGE.',
     bonusMultiplier: 1.5,
+    capitalBonus: 0,
     lockMonths: 12,
     unlockDate: OPTION_C_UNLOCK,
   },
