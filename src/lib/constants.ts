@@ -5,12 +5,12 @@ export const CONTRACT_ADDRESS = '0xDf24f8c21Cb404B3031a450D8e049D6E39FC1fA5'
 export const PRESALE_PRICE_USD = 0.01
 export const TOTAL_SUPPLY = 10_000_000_000
 
-// TGE = April 27, 2026 (start of option selection window)
-export const TGE_DATE = new Date('2026-04-27T12:00:00Z')
+// TGE = May 4, 2026
+export const TGE_DATE = new Date('2026-05-04T12:00:00Z')
 
 // Unlock dates derived from TGE
-export const OPTION_B_UNLOCK = new Date('2026-10-27T12:00:00Z') // TGE + 6 months
-export const OPTION_C_UNLOCK = new Date('2027-04-27T12:00:00Z') // TGE + 12 months
+export const OPTION_B_UNLOCK = new Date('2026-11-04T12:00:00Z') // TGE + 6 months
+export const OPTION_C_UNLOCK = new Date('2027-05-04T12:00:00Z') // TGE + 12 months
 
 export type PresaleOption = 'A' | 'B' | 'C'
 

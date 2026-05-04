@@ -408,7 +408,7 @@ export default function PresaleCalculator() {
                 <Info size={14} className="text-gray-600 mt-0.5 shrink-0" />
                 <p className="text-xs text-gray-600 leading-relaxed">
                   Your tokens are locked and will be released on the unlock date above.
-                  Selection window: Apr 27 – May 18, 2026 via{' '}
+                  TGE: May 4, 2026 · Selection window: Apr 27 – May 18, 2026 via{' '}
                   <a
                     href="https://kaito.ai/capital-launchpad"
                     target="_blank"

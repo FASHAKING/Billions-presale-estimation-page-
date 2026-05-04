@@ -14,7 +14,7 @@ const FAQS = [
   },
   {
     q: 'When is TGE and when do tokens unlock?',
-    a: 'TGE (Token Generation Event) was April 27, 2026. Option B tokens unlock 6 months later on October 27, 2026. Option C tokens unlock 12 months later on April 27, 2027.',
+    a: 'TGE (Token Generation Event) was May 4, 2026. Option B tokens unlock 6 months later on November 4, 2026. Option C tokens unlock 12 months later on May 4, 2027.',
   },
   {
     q: 'How does the estimator calculate my allocation?',
@@ -26,7 +26,7 @@ const FAQS = [
   },
   {
     q: 'How do I submit my option selection?',
-    a: 'The selection window is open from 12:00pm UTC on Monday, April 27, 2026 to 12:00pm UTC on Monday, May 18, 2026. Submit your choice via kaito.ai/capital-launchpad. This estimator is for calculation purposes only — your submission must be done through the official portal.',
+    a: 'The selection window is open from 12:00pm UTC on Monday, April 27, 2026 to 12:00pm UTC on Monday, May 18, 2026. Submit your choice via kaito.ai/capital-launchpad. This estimator is for calculation purposes only — your submission must be done through the official portal. TGE was May 4, 2026.',
   },
   {
     q: 'Are the ROI figures guaranteed?',
