@@ -5,54 +5,50 @@ import { ChevronDown } from 'lucide-react'
 
 const FAQS = [
   {
-    q: 'What is $BILL and what does Billions do?',
-    a: '$BILL is the native utility and governance token of the Billions protocol — a decentralized platform designed to bring institutional-grade wealth strategies to everyday users. Token holders gain access to premium features, fee discounts, and governance voting rights.',
+    q: 'What was the presale price for $BILL?',
+    a: 'The $BILL token presale was conducted at a $100,000,000 (100M) valuation with a total supply of 10,000,000,000 (10 billion) tokens. This gives a presale price of $0.01 per $BILL token.',
   },
   {
-    q: 'How does the presale allocation work?',
-    a: 'You choose a presale round, input your investment amount in ETH, BNB, USDT, or USDC, and the calculator shows your exact $BILL allocation. Earlier rounds have lower prices — buying in Pre-Sale Round 1 gets you tokens at $0.0004 vs $0.001 at public sale.',
+    q: 'What are Options A, B, and C?',
+    a: 'Option A gives you a full 100% refund of your original contribution — no tokens. Option B lets you keep your full token allocation plus a 25% bonus on top, with a 6-month lock after TGE. Option C gives you a 50% bonus on top of your full allocation, locked for 12 months after TGE. B and C are designed for contributors who want longer-term alignment with Billions.',
   },
   {
-    q: 'Are the potential return figures guaranteed?',
-    a: 'No. The potential return estimates (2x, 5x, 10x, etc.) are purely illustrative scenarios to help you understand how your investment could perform at different price levels. Cryptocurrency investments are highly speculative and you may lose your entire investment.',
+    q: 'When is TGE and when do tokens unlock?',
+    a: 'TGE (Token Generation Event) was April 27, 2026. Option B tokens unlock 6 months later on October 27, 2026. Option C tokens unlock 12 months later on April 27, 2027.',
   },
   {
-    q: 'What currencies can I use to invest?',
-    a: 'We accept ETH (Ethereum), BNB (Binance Smart Chain), USDT (Tether), and USDC (USD Coin). The calculator uses live exchange rates to show you your exact $BILL allocation in real-time.',
+    q: 'How does the estimator calculate my allocation?',
+    a: 'Your base allocation = your investment ÷ $0.01 (presale price). Option B multiplies that by 1.25× (adds 25% bonus). Option C multiplies by 1.50× (adds 50% bonus). Current value = your token count × live $BILL market price from DexScreener.',
   },
   {
-    q: 'When will I receive my $BILL tokens?',
-    a: 'Tokens are distributed within 48 hours of the public sale closing. Presale participants receive their allocation first, followed by a 6-month linear vesting schedule to ensure long-term price stability.',
+    q: 'Where does the live price come from?',
+    a: 'The $BILL price is fetched live from DexScreener using the official contract address (0xb1110919016846972056AB995054D65560D5f05E). It refreshes automatically every 30 seconds and selects the trading pair with the highest liquidity for accuracy.',
   },
   {
-    q: 'Is there a minimum or maximum investment?',
-    a: 'Each round has different limits. Pre-Sale Round 1 allows between $100 and $50,000 USD equivalent. Limits vary by round to ensure fair distribution across the community.',
+    q: 'How do I submit my option selection?',
+    a: 'The selection window is open from 12:00pm UTC on Monday, April 27, 2026 to 12:00pm UTC on Monday, May 18, 2026. Submit your choice via kaito.ai/capital-launchpad. This estimator is for calculation purposes only — your submission must be done through the official portal.',
   },
   {
-    q: 'How do I know this is legitimate?',
-    a: 'Our smart contracts are audited by a reputable third-party firm. Registration here captures your interest — no payment is collected on this site. Actual payment instructions are sent via verified email with official contract addresses.',
+    q: 'Are the ROI figures guaranteed?',
+    a: 'No. All value calculations are based on the live market price of $BILL and are for informational purposes only. Cryptocurrency prices are volatile and can go down as well as up. This is not financial advice. Always do your own research.',
   },
 ]
 
 export default function FAQSection() {
-  const [open, setOpen] = useState<number | null>(0)
+  const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div className="text-center mb-12">
-        <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">
-          Got Questions?
-        </p>
-        <h2 className="section-title">Frequently Asked Questions</h2>
+    <section id="faq" className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="text-center mb-10">
+        <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">FAQ</p>
+        <h2 className="text-3xl font-bold text-white">Common Questions</h2>
       </div>
 
-      <div className="max-w-3xl mx-auto flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         {FAQS.map((faq, i) => (
           <div
             key={i}
-            className={`glass-card overflow-hidden transition-all duration-200 ${
-              open === i ? 'border-amber-500/25' : ''
-            }`}
+            className={`glass-card overflow-hidden transition-all duration-200 ${open === i ? 'border-amber-500/20' : ''}`}
           >
             <button
               onClick={() => setOpen(open === i ? null : i)}
@@ -60,10 +56,8 @@ export default function FAQSection() {
             >
               <span className="font-semibold text-white text-sm pr-4">{faq.q}</span>
               <ChevronDown
-                size={18}
-                className={`shrink-0 text-amber-400 transition-transform duration-200 ${
-                  open === i ? 'rotate-180' : ''
-                }`}
+                size={16}
+                className={`shrink-0 text-amber-400 transition-transform duration-200 ${open === i ? 'rotate-180' : ''}`}
               />
             </button>
             {open === i && (

@@ -1,63 +1,30 @@
 import Navbar from '@/components/Navbar'
-import HeroSection from '@/components/HeroSection'
-import PriceTicker from '@/components/PriceTicker'
-import StatsSection from '@/components/StatsSection'
-import PresaleRounds from '@/components/PresaleRounds'
-import Calculator from '@/components/Calculator'
-import RegistrationForm from '@/components/RegistrationForm'
+import PriceBanner from '@/components/PriceBanner'
+import PresaleCalculator from '@/components/PresaleCalculator'
 import FAQSection from '@/components/FAQSection'
 import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
-    <main className="relative overflow-x-hidden">
+    <main className="relative overflow-x-hidden min-h-screen">
       <Navbar />
-      <HeroSection />
-      <PriceTicker />
-      <StatsSection />
+      <PriceBanner />
 
-      {/* How it works */}
-      <section id="how-it-works" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
-          <p className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3">
-            Simple Process
-          </p>
-          <h2 className="section-title">How It Works</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {[
-            {
-              step: '01',
-              title: 'Choose a Round',
-              desc: 'Select the presale round that fits your investment timeline. Earlier rounds = lower price.',
-              icon: '🎯',
-            },
-            {
-              step: '02',
-              title: 'Calculate Allocation',
-              desc: 'Enter your investment in ETH, BNB, USDT or USDC. See your exact $BILL allocation instantly.',
-              icon: '🧮',
-            },
-            {
-              step: '03',
-              title: 'Register & Invest',
-              desc: 'Lock your spot with your email. We send official payment instructions to complete your purchase.',
-              icon: '🚀',
-            },
-          ].map(item => (
-            <div key={item.step} className="glass-card-hover p-6 text-center">
-              <div className="text-4xl mb-4">{item.icon}</div>
-              <div className="text-xs font-black text-amber-500/50 mb-2 tracking-widest">{item.step}</div>
-              <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-              <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Subtle background radial */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full bg-purple-900/20 blur-[120px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-amber-500/5 blur-[100px]" />
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(245,158,11,0.6) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(245,158,11,0.6) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
+        />
+      </div>
 
-      <PresaleRounds />
-      <Calculator />
-      <RegistrationForm />
+      <PresaleCalculator />
       <FAQSection />
       <Footer />
     </main>
