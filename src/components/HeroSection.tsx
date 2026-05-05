@@ -42,7 +42,7 @@ export default function HeroSection() {
 
       {/* Subtitle */}
       <p className="animate-fade-in-up delay-300 text-gray-400 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-        Enter your investment and the option you chose — see your{' '}
+        Enter your investment and the option you chose see your{' '}
         <span className="text-white font-semibold">exact $BILL allocation</span> and its{' '}
         <span className="text-[#3EFFC8] font-semibold">live market value</span> instantly.
       </p>
