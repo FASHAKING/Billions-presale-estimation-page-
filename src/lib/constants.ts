@@ -30,7 +30,7 @@ export const OPTIONS: OptionConfig[] = [
     id: 'A',
     label: 'Full Refund + 5% Bonus',
     short: 'Option A',
-    description: 'Receive 100% of your original contribution back plus a 5% cash bonus on top. No $BILL tokens.',
+    description: 'Receive 100% of your original contribution back plus a 5% cash bonus on top. No $BILL tokens. Refunds begin ~May 19, 2026 (up to 3–4 weeks after TGE).',
     bonusMultiplier: 0,
     capitalBonus: 0.05,
     lockMonths: null,

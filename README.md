@@ -19,7 +19,7 @@ During the Billions presale, participants chose one of three options for how the
 
 | Option | Description | Token Bonus | Capital Bonus | Lock Period |
 |--------|-------------|-------------|---------------|-------------|
-| **A** | Full refund + cash bonus | No tokens | +5% cash on investment | None |
+| **A** | Full refund + cash bonus | No tokens | +5% cash on investment | None — refunds begin ~May 19, 2026 (up to 3–4 weeks after TGE) |
 | **B** | Full allocation + bonus tokens | +25% bonus tokens | None | 6 months post-TGE (unlocks Nov 4, 2026) |
 | **C** | Full allocation + max bonus tokens | +50% bonus tokens | None | 12 months post-TGE (unlocks May 4, 2027) |
 
