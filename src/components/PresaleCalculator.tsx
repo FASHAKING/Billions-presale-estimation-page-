@@ -439,9 +439,23 @@ export default function PresaleCalculator() {
                     )}
                   </div>
                   {currentPrice != null && (
-                    <p className="text-xs text-gray-600 mt-2">
-                      {priceFmt(currentPrice)} × {tokenFmt(tokens)} tokens
-                    </p>
+                    <>
+                      <p className="text-xs text-gray-600 mt-2">
+                        {priceFmt(currentPrice)} × {tokenFmt(tokens)} tokens
+                      </p>
+                      <div className="mt-3 pt-3 border-t border-[rgba(255,255,255,0.06)] flex flex-col gap-1.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-gray-500">Base tokens ({tokenFmt(baseTokens)})</span>
+                          <span className="font-semibold text-gray-300">{usd(baseTokens * currentPrice)}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-[#3EFFC8]/70">
+                            Bonus tokens +{option.bonusMultiplier === 1.25 ? '25%' : '50%'} ({tokenFmt(bonusTokens)})
+                          </span>
+                          <span className="font-semibold text-[#3EFFC8]">+{usd(bonusTokens * currentPrice)}</span>
+                        </div>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
