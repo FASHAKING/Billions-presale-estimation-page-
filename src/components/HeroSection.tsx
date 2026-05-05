@@ -6,7 +6,7 @@ const STATS = [
   { label: 'Presale Price', value: '$0.01', sub: 'per $BILL' },
   { label: 'Total Supply',  value: '10B',   sub: '$BILL tokens' },
   { label: 'TGE Date',      value: 'May 4', sub: '2026' },
-  { label: 'Network',       value: 'BNB',   sub: 'Chain' },
+  { label: 'Network',       value: 'BNB and Ethereum',   sub: 'Chains' },
 ]
 
 export default function HeroSection() {
