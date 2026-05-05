@@ -26,7 +26,7 @@ export default function HeroSection() {
         <div className="inline-flex items-center gap-2 bg-[rgba(0,70,255,0.1)] border border-[rgba(0,70,255,0.25)] rounded-full px-4 py-1.5">
           <span className="w-2 h-2 rounded-full bg-[#3EFFC8] glow-dot" />
           <span className="text-sm text-[#3EFFC8] font-semibold tracking-wide">
-            $BILL Token — Live on BNB Chain
+            $BILL Token — Live on BNB and Ethereum Chain
           </span>
         </div>
       </div>
