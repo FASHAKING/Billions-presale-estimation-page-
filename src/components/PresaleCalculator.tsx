@@ -328,6 +328,14 @@ export default function PresaleCalculator() {
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Total Refund</div>
                     <div className="text-5xl font-black text-white">{usd(investmentNum * 1.05)}</div>
                     <div className="text-xs text-gray-600 mt-2">returned to your wallet</div>
+                    <div className="mt-4 flex items-start gap-2 bg-[rgba(255,200,0,0.06)] border border-[rgba(255,200,0,0.15)] rounded-lg px-4 py-3 text-left">
+                      <svg className="shrink-0 mt-0.5 text-yellow-400/70" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                      </svg>
+                      <p className="text-xs text-yellow-300/60 leading-relaxed">
+                        Refunds begin <span className="text-yellow-300/90 font-semibold">~May 19, 2026</span> and may take up to <span className="text-yellow-300/90 font-semibold">3–4 weeks</span> after TGE to process.
+                      </p>
+                    </div>
                   </div>
                 </>
               ) : (
